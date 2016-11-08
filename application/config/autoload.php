@@ -60,7 +60,7 @@ $autoload['packages'] = array();
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
 
-$autoload['libraries'] = array('database','session', 'email');
+$autoload['libraries'] = array('database','session', 'email','template');
 
 
 /*
@@ -104,7 +104,7 @@ $autoload['helper'] = array('url','form','security', 'file');
 |
 */
 
-$autoload['config'] = array();
+$autoload['config'] = array('facebook');
 
 
 /*

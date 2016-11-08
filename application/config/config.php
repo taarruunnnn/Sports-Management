@@ -16,7 +16,7 @@ $config['oauthProvidersData'] = array(
 );
 
 
-$config['base_url'] = 'http://localhost/hmvc-codeigniter/';
+$config['base_url'] = 'https://sports-dhanapalrandy.c9users.io/';
 
 /*
 |--------------------------------------------------------------------------

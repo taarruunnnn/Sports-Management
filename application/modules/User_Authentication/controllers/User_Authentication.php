@@ -1,5 +1,4 @@
 
-
 <?php
 defined('BASEPATH')or exit('Not Allowed');
 //session_start(); //we need to start session in order to access it through CI
@@ -21,7 +20,10 @@ Class User_Authentication extends MX_Controller {
 		// Load database
 		//$this->load->model('Login');
 		}
-		
+		public function dashboard()
+		{
+			$this->load->view('admin_page');
+		}
 		// Show login page
 		public function index() {
 			//echo "dhana";exit;
@@ -62,46 +64,74 @@ Class User_Authentication extends MX_Controller {
 		
 		// Check for user login process
 		public function user_login_process() {
-		//echo $this->input->post('password');exit;
+		
 		$data;
-		$this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('email', 'Email', 'trim|required|xss_clean');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean');
 		
 		if ($this->form_validation->run() == FALSE) {
 		if(isset($this->session->userdata['logged_in'])){
-		$this->load->view('admin_page');
+		return redirect('Dashboard');
 		}else{
 		$this->load->view('login_form');
 		}
-		} else {
+		} else 
+		{
 		$data = array(
-		'username' => $this->input->post('username'),
+		'username' => $this->input->post('email'),
 		'password' => $this->input->post('password')
 		);
-		//print_r($data);exit;
+		
 		$this->load->model('Login');
 		$result=$this->Login->Postlogin($data);
-		//$result = $this->login_database->login_database->login($data);
+		//print_r($result[0]['role']);exit;
 		
-		if ($result == TRUE) {
+		if ($result[0]['role']==1) 
+		{
+			$username = $this->input->post('email');
+			$result = $this->Login->read_user_information($username);
 		
-		$username = $this->input->post('username');
-		$result = $this->Login->read_user_information($username);
-		//print_r($result);exit;
-		if ($result != false) {
-		// Add user data in session
-		$session_data = array(
-		'username' => $result[0]->name,
-		'email' => $result[0]->email,
-		);
-		$this->session->set_userdata('logged_in',$session_data);
-		$this->load->view('admin_page');
+			if ($result != false) 
+			{
+				// Add user data in session
+				$session_data = array(
+				'username' => $result[0]->name,
+				'email' => $result[0]->email,
+				);
+				$messge = array('message' => 'Welcome to Dashboard','class' => 'alert alert-success fade in');
+				$this->session->set_flashdata('item', $messge);
+				$this->session->keep_flashdata('item',$messge);
+				$this->session->set_userdata('logged_in',$session_data);
+				
+				$this->load->view('admin_page');
+			}
+			
+		} 
+		elseif ($result[0]['role']==2) {
+			$username = $this->input->post('email');
+			$result = $this->Login->read_user_information($username);
+		
+			if ($result != false) 
+			{
+				// Add user data in session
+				$session_data = array(
+				'username' => $result[0]->name,
+				'email' => $result[0]->email,
+				);
+				$messge = array('message' => 'Welcome to Dashboard','class' => 'alert alert-success fade in');
+				$this->session->set_flashdata('item', $messge);
+				$this->session->keep_flashdata('item',$messge);
+				$this->session->set_userdata('logged_in',$session_data);
+				
+				$this->load->view('pt_teacher');
+			}
 		}
-		} else {
-		$data = array(
-		'error_message' => 'Invalid Username or Password'
-		);
-		$this->load->view('login_form', $data);
+		else 
+		{
+			$data = array(
+			'error_message' => 'Invalid Username or Password'
+			);
+			$this->load->view('login_form', $data);
 		}
 		}
 		}
@@ -135,7 +165,7 @@ Class User_Authentication extends MX_Controller {
          else { 
             $data =$this->upload->data(); 
 			//print_r($data);exit;
-			 
+			 //$this->load->view('links');
              $this->load->view('admin_page',$data); 
          } 
       } 

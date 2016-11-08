@@ -1,43 +1,203 @@
-<html>
-<?php
-if (!isset($this->session->userdata['logged_in'])) {
-	header("location: login");
-} 
-?>
-<head>
-<title>Admin Page</title>
-<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/style.css">
-<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro|Open+Sans+Condensed:300|Raleway' rel='stylesheet' type='text/css'>
-</head>
-<body>
-<div id="profile">
-<?php
-echo "Hello <b id='welcome'><i>" . $this->session->userdata['logged_in']['username'] . "</i> !</b>";
-echo "<br/>";
-echo "<br/>";
-echo "Welcome to Admin Page";
-echo "<br/>";
-echo "<br/>";
-echo "Your Username is: " . $this->session->userdata['logged_in']['username'];
-echo "<br/>";
-echo "Your Email is: " . $this->session->userdata['logged_in']['email'];
-echo "<br/>";
-?>
-<b id="logout"><a href="logout">Logout</a></b>
-</div>
-<br/>
- 		<?php if(isset($error)) {
- 			echo $error;	 
-			}			
-			?>
-      <?php echo form_open_multipart('upload');?> 
-		
-      <form action = "" method = "">
-         <input type = "file" name = "userfile" size = "20" /> 
-         <br /><br /> 
-         <input type = "submit" value = "upload" /> 
-      </form> 
-      
-       
+<?php require_once($_SERVER['DOCUMENT_ROOT'].'/application/modules/includes/links.php'); ?>
+    <link rel="stylesheet" href="<?php base_url() ?>assets/css/only_dashboard.css" />
+<title>Admin -Dashboard</title>
+<?php require_once($_SERVER['DOCUMENT_ROOT'].'/application/modules/includes/header.php'); ?>
+
+        <!-- Right side column. Contains the navbar and content of the page -->
+        <aside class="right-side">
+            <!-- Main content -->
+            <section class="content-header">
+                <h1><?php
+                    
+                    if($this->session->flashdata('item')) {
+                    $message = $this->session->flashdata('item');
+                    ?>
+                    <div class="<?php echo $message['class'] ?>"><?php echo $message['message']; ?>
+                    
+                    </div>
+                    <?php
+                    }
+                    
+                    ?></h1>
+                <ol class="breadcrumb">
+                    <li class="active">
+                        <a href="#">
+                            <i class="livicon" data-name="home" data-size="16" data-color="#333" data-hovercolor="#333"></i>
+                            Home
+                        </a>
+                    </li>
+                </ol>
+            </section>
+            <section class="content">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-sm-6 margin_10 animated fadeInLeftBig">
+                        <!-- Trans label pie charts strats here-->
+                        <div class="lightbluebg no-radius">
+                            <div class="panel-body squarebox square_boxs">
+                                <div class="col-xs-12 pull-left nopadmar">
+                                    <div class="row">
+                                        <div class="square_box col-xs-7 text-right">
+                                           <a href="PTTeacher" style="color:#fff;"><span><h2 style="font-size: 18px;text-align:left;">PT TEACHER</h2></span></a>
+                                           
+                                            <div class="number" id="myTargetElement1"></div>
+                                        </div>
+                                        <i class="livicon  pull-right" data-name="biohazard" data-l="true" data-c="#fff" data-hc="#fff" data-s="70"></i>
+                                    </div>
+                                    <!--<div class="row">
+                                        <div class="col-xs-6">
+                                            <small class="stat-label">Last Week</small>
+                                            <h4 id="myTargetElement1.1"></h4>
+                                        </div>
+                                        <div class="col-xs-6 text-right">
+                                            <small class="stat-label">Last Month</small>
+                                            <h4 id="myTargetElement1.2"></h4>
+                                        </div>
+                                    </div>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 margin_10 animated fadeInUpBig">
+                        <!-- Trans label pie charts strats here-->
+                        <div class="redbg no-radius">
+                            <div class="panel-body squarebox square_boxs">
+                                <div class="col-xs-12 pull-left nopadmar">
+                                    <div class="row">
+                                        <div class="square_box col-xs-7 pull-left">
+                                            <a href="" style="color:#fff;"><span><h2 style="font-size: 18px;text-align:left;">CLASS TEACHER</h2></span></a>
+                                            <div class="number" id="myTargetElement2"></div>
+                                        </div>
+                                        <i class="livicon pull-right" data-name="balance" data-l="true" data-c="#fff" data-hc="#fff" data-s="70"></i>
+                                    </div>
+                                    <!--<div class="row">
+                                        <div class="col-xs-6">
+                                            <small class="stat-label">Last Week</small>
+                                            <h4 id="myTargetElement1.1"></h4>
+                                        </div>
+                                        <div class="col-xs-6 text-right">
+                                            <small class="stat-label">Last Month</small>
+                                            <h4 id="myTargetElement1.2"></h4>
+                                        </div>
+                                    </div>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-md-6 margin_10 animated fadeInDownBig">
+                        <!-- Trans label pie charts strats here-->
+                        <div class="goldbg no-radius">
+                            <div class="panel-body squarebox square_boxs">
+                                <div class="col-xs-12 pull-left nopadmar">
+                                    <div class="row">
+                                        <div class="square_box col-xs-7 pull-left">
+                                           <a href="" style="color:#fff;"><span><h2 style="font-size: 18px;text-align:left;">STUDENT</h2></span></a>
+                                            <div class="number" id="myTargetElement3"></div>
+                                        </div>
+                                        
+                                        <i class="livicon pull-right" data-name="user" data-l="true" data-c="#fff" data-hc="#fff" data-s="70"></i>
+                                    </div>
+                                    <!--<div class="row">
+                                        <div class="col-xs-6">
+                                            <small class="stat-label">Last Week</small>
+                                            <h4 id="myTargetElement1.1"></h4>
+                                        </div>
+                                        <div class="col-xs-6 text-right">
+                                            <small class="stat-label">Last Month</small>
+                                            <h4 id="myTargetElement1.2"></h4>
+                                        </div>
+                                    </div>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 margin_10 animated fadeInRightBig">
+                        <!-- Trans label pie charts strats here-->
+                        <div class="palebluecolorbg no-radius">
+                            <div class="panel-body squarebox square_boxs">
+                                <div class="col-xs-12 pull-left nopadmar">
+                                    <div class="row">
+                                        <div class="square_box col-xs-7 pull-left">
+                                            <a href="" style="color:#fff;"><span><h2 style="font-size: 18px;text-align:left;">PARENT</h2></span></a>
+                                            <div class="number" id="myTargetElement4"></div>
+                                        </div>
+                                        <i class="livicon pull-right" data-name="users" data-l="true" data-c="#fff" data-hc="#fff" data-s="70"></i>
+                                    </div>
+                                   <!--<div class="row">
+                                        <div class="col-xs-6">
+                                            <small class="stat-label">Last Week</small>
+                                            <h4 id="myTargetElement1.1"></h4>
+                                        </div>
+                                        <div class="col-xs-6 text-right">
+                                            <small class="stat-label">Last Month</small>
+                                            <h4 id="myTargetElement1.2"></h4>
+                                        </div>
+                                    </div>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="clearfix"></div>
+
+            </section>
+        </aside>
+        <!-- right-side -->
+    </div>
+    <a id="back-to-top" href="#" class="btn btn-primary btn-lg back-to-top" role="button" title="Return to top" data-toggle="tooltip" data-placement="left">
+        <i class="livicon" data-name="plane-up" data-size="18" data-loop="true" data-c="#fff" data-hc="white"></i>
+    </a>
+    <!-- global js -->
+    <script src="<?php echo base_url() ?>assets/js/jquery-1.11.1.min.js" type="text/javascript"></script>
+    <script src="<?php echo base_url() ?>assets/js/bootstrap.min.js" type="text/javascript"></script>
+    <!--livicons-->
+    <script src="<?php echo base_url() ?>assets/vendors/livicons/minified/raphael-min.js" type="text/javascript"></script>
+    <script src="<?php echo base_url() ?>assets/vendors/livicons/minified/livicons-1.4.min.js" type="text/javascript"></script>
+   <script src="<?php echo base_url() ?>assets/js/josh.js" type="text/javascript"></script>
+    <script src="<?php echo base_url() ?>assets/js/metisMenu.js" type="text/javascript"> </script>
+    <script src="<?php echo base_url() ?>assets/vendors/holder-master/holder.js" type="text/javascript"></script>
+    <!-- end of global js -->
+    <!-- begining of page level js -->
+    <!--  todolist-->
+    <script src="<?php echo base_url() ?>assets/js/todolist.js"></script>
+    <!-- EASY PIE CHART JS -->
+    <script src="<?php echo base_url() ?>assets/vendors/charts/easypiechart.min.js"></script>
+    <script src="<?php echo base_url() ?>assets/vendors/charts/jquery.easypiechart.min.js"></script>
+    <!--for calendar-->
+    <script src="<?php echo base_url() ?>assets/vendors/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
+    <script src="<?php echo base_url() ?>assets/vendors/fullcalendar/calendarcustom.min.js" type="text/javascript"></script>
+    <!--   Realtime Server Load  -->
+    <script src="<?php echo base_url() ?>assets/vendors/charts/jquery.flot.min.js" type="text/javascript"></script>
+    <script src="<?php echo base_url() ?>assets/vendors/charts/jquery.flot.resize.min.js" type="text/javascript"></script>
+    <!--Sparkline Chart-->
+    <script src="<?php echo base_url() ?>assets/vendors/charts/jquery.sparkline.js"></script>
+    <!-- Back to Top-->
+    <script type="text/javascript" src="<?php echo base_url() ?>assets/vendors/countUp/countUp.js"></script>
+    <!--   maps -->
+    <script src="<?php echo base_url() ?>assets/vendors/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+    <script src="<?php echo base_url() ?>assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+     <script src="<?php echo base_url() ?>assets/vendors/jscharts/Chart.js"></script>
+    <script src="<?php echo base_url() ?>assets/js/dashboard.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        var composeHeight = $('#calendar').height() +21 - $('.adds').height();
+        $('.list_of_items').slimScroll({
+            color: '#A9B6BC',
+            height: composeHeight + 'px',
+            size: '5px'
+        });
+    });
+    </script>
+    <!-- end of page level js -->
+  <script type="application/javascript">
+/** After windod Load */
+$(window).bind("load", function() {
+  window.setTimeout(function() {
+    $(".alert").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove();
+    });
+}, 4000);
+});
+</script>
 </body>
 </html>
