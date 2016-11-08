@@ -81,7 +81,6 @@ Class User_Authentication extends MX_Controller {
 		'username' => $this->input->post('email'),
 		'password' => $this->input->post('password')
 		);
-		
 		$this->load->model('Login');
 		$result=$this->Login->Postlogin($data);
 		//print_r($result[0]['role']);exit;

@@ -56,10 +56,22 @@
                                 </div>
                                
                             </div>-->
+                            <?php
+                
+                                if($this->session->flashdata('item')) {
+                                $message = $this->session->flashdata('item');
+                                ?>
+                                <div class="<?php echo $message['class'] ?>"><?php echo $message['message']; ?>
+                                
+                                </div>
+                                <?php
+                                }
+                                
+                            ?>
                             </br>   
                             <div class="btn-group pull" style="padding-left: 425px;top: -13px;">
                                     
-                                   <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#myModal"><i class="fa fa-cloud-upload" aria-hidden="true">Upload Excel</i></button>
+                                   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" style="height:33px;padding-top:5px;text-align:left;width:167px;border-radius:3px;"><i class="fa fa-cloud-upload" aria-hidden="true">Upload Excel</i></button>
                                   
                             </div> 
                             
@@ -70,20 +82,16 @@
                                         Add Lession
                                     </a>
                                   
-                            </div>    
+                            </div>   
+                            <div class="btn-group pull" style="padding-left:6px;top:-80px;">
+                                    
+                                   <a href="Admin/exportExcel" class="btn btn-success btn-block btn-md btn-responsive"><i class="fa fa-plus-square" aria-hidden="true"></i>
+                                        Export as Excel
+                                    </a>
+                                  
+                            </div>   
                                 </br></br>
-                               <?php
-                    
-                                    if($this->session->flashdata('item')) {
-                                    $message = $this->session->flashdata('item');
-                                    ?>
-                                    <div class="<?php echo $message['class'] ?>"><?php echo $message['message']; ?>
-                                    
-                                    </div>
-                                    <?php
-                                    }
-                                    
-                                    ?>
+                               
                             <div class="panel-body">
                                 
                                  <table class="table table-striped table-bordered" id="table1">
@@ -207,6 +215,15 @@
     <script type="text/javascript" src="<?php echo base_url() ?>assets/vendors/datatables/dataTables.bootstrap.js"></script>
     <script type="text/javascript" src="<?php echo base_url() ?>assets/js/pages/table-advanced.js"></script>
     <!-- end of page level js -->
-    
+    <script type="application/javascript">
+    /** After windod Load */
+        $(window).bind("load", function() {
+          window.setTimeout(function() {
+            $(".alert").fadeTo(300, 0).slideUp(300, function(){
+                $(this).remove();
+            });
+        }, 2000);
+        });
+    </script>
 </body>
 </html>

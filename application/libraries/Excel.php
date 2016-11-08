@@ -41,9 +41,9 @@ class Excel {
                 $rowNumber++;
             }
         }
-        header('Content-type: application/ms-excel');
+        header('Content-Type: application/vnd.ms-excel');
         header("Content-Disposition: attachment; filename=\"" . $filename . "\"");
-        header("Cache-control: private");
+        header('Cache-Control: max-age=0'); 
         $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
         $objWriter->save("tmp/$filename");
         header("location: " . base_url() . "tmp/$filename");

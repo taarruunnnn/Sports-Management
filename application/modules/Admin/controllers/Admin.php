@@ -8,6 +8,8 @@ class Admin extends MX_Controller
         $this->load->helper(array('form', 'url')); 
         $this->load->library('session');
         $this->load->library('form_validation');
+        $this->load->library("excel");
+        $this->load->library('cezpdf');
     }
     public function PTteachers()
     {   
@@ -141,17 +143,51 @@ class Admin extends MX_Controller
 			);
 			return redirect('PTTeacher',$data);
 		}
-		
-		
-		
     
     }
-    function uploadData()
+    public function uploadData()
     {	
     	$this->load->model('Lessions');
         $result=$this->Lessions->uploadData();
-        
-		     return redirect('Lessions');
+        	$messge = array('message' => 'Data Added Successfully','class' => 'alert alert-success fade in');
+			$this->session->set_flashdata('item', $messge);
+			$this->session->keep_flashdata('item',$messge);
+		    return redirect('Lessions');
 		 
     }
+    
+    public function exportExcel()
+    {
+    	$this->load->model("Lessions");
+    	$this->excel->setActiveSheetIndex(0);
+        // Gets all the data using MY_Model.php
+        $data = $this->Lessions->getAllData();
+	$res=iconv("UTF-8", "CP1252", $data);
+	//print_r($res);exit;
+	$this->excel->getActiveSheet()->setTitle('Users list');
+ 
+
+        $this->excel->stream('data.xls', $data);
+    }
+    
+    function tables()
+	{	
+			$this->load->model('Lessions');
+        $result=$this->Lessions->getAllData();
+		//print_r($result);exit;
+	    $this->load->library('cezpdf');
+	    $db_data[] =$result ;
+	   // $db_data[] = array('name' => 'Jane Doe', 'phone' => '222-333-4444', 'email' => 'jane.doe@something.com');
+	    //$db_data[] = array('name' => 'Jon Smith', 'phone' => '333-444-5555', 'email' => 'jsmith@someplacepsecial.com');
+	    
+	    $col_names = array(
+	    	
+	        'semester' => 'semester',
+	        'section' => 'section',
+	        'title' => 'title'
+	    );
+	    
+	    $this->cezpdf->ezTable($result, $col_names, 'Contact List', array('width'=>550));
+	    $this->cezpdf->ezStream();
+	}
 }
